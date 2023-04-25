@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Notifications</title>
+  <style>
+    .notification-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: flex-end;
+    }
+
+    .notification {
+      background-color: ivory;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 16px;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s;
+	  font-family: Arial, sans-serif;
+	  font-size: 9pt;
+    }
+
+    .notification.hide {
+      opacity: 0;
+      transform: translateY(-50px);
+    }
+  </style>
+</head>
+<body>
+  <button id="show-notification">Show Notification</button>
+  <div class="notification-container" id="notification-container"></div>
+
+  <script>
+    const getCurrentTime = () => {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      return `${hours}:${minutes}:${seconds}`;
+    };
+
+    const showNotification = () => {
+      const container = document.getElementById('notification-container');
+      const notification = document.createElement('div');
+      notification.classList.add('notification');
+      notification.innerHTML = `Current time of this notification: ${getCurrentTime()}`;
+
+      container.appendChild(notification);
+
+      setTimeout(() => {
+        notification.classList.add('hide');
+        setTimeout(() => {
+          container.removeChild(notification);
+        }, 300);
+      }, 5000);
+    };
+
+    document.getElementById('show-notification').addEventListener('click', showNotification);
+  </script>
+</body>
+</html>
